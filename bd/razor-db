@@ -1,0 +1,62 @@
+create SEQUENCE usuario_id_seq;
+
+create table "usuarios"(
+	user_id integer primary key default nextval('usuario_id_seq'),
+	nombre varchar(100),
+	password varchar(30),
+	tipo varchar(10)
+);
+
+insert into usuarios (nombre, password, tipo) values('yazz', 'y@zz', 'admin'), ('soto', 's0t0', 'admin'), ('lore', 'l0r3', 'user');
+
+select * from usuarios;
+
+create SEQUENCE alumn_id_seq;
+
+create table "alumnos"(
+	alumn_carnet integer primary key not null,
+	nombre varchar(100),
+	apellido varchar(100),
+	direccion text
+);
+
+insert into alumnos (alumn_carnet, nombre, apellido, direccion) values(01134648, 'Yasmin', 'Rivas', 'Col. Los almendros'), (011346410, 'Gabriela', 'Rivas', 'Col. Las Brisas'), (011346411, 'Manuel', 'Alvarenga', 'Col. Las Margaritas');
+
+select * from alumnos;
+
+create SEQUENCE nota_id_seq;
+
+create table "nota"(
+	califi_id integer primary key default nextval('nota_id_seq'),
+	cali1 float,
+	cali2 float,
+	cali3 float,
+	cali4 float,
+	cali5 float,
+	prom float,
+	carnet_alumn_id integer
+);
+
+ALTER TABLE nota
+ADD FOREIGN KEY (carnet_alumn_id)
+REFERENCES alumnos(alumn_carnet);
+
+insert into nota (cali1, cali2, cali3, cali4, cali5, carnet_alumn_id) values(8.5, 9.5, 5, 6.3, 10, 01134648), (10, 10, 7, 9.4, 2, 011346410), (10, 6, 8.6, 9.5, 10, 011346411);
+
+select * from nota;
+
+create SEQUENCE grado_id_seq;
+
+create table "grado"(
+	grado_id integer primary key default nextval('grado_id_seq'),
+	nombre varchar(100),
+	carnet_alumn_id integer
+);
+
+ALTER TABLE grado
+ADD FOREIGN KEY (carnet_alumn_id)
+REFERENCES alumnos(alumn_carnet);
+
+insert into grado (nombre, carnet_alumn_id) values('primer grado', 01134648), ('primer grado', 011346410), ('primer grado', 011346411);
+
+select * from grado;
